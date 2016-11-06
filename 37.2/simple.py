@@ -1,6 +1,5 @@
 import random
 import itertools
-from tqdm import tqdm
 
 H="H"
 T="T"
@@ -52,22 +51,18 @@ def is_match(flips):
             (flips.count(T) == 1)
             and (len(flips) == 2))
 
-def match_prob(flip, stoprule, runs, status=None):
+def match_prob(flip, stoprule, runs):
     runi = xrange(runs)
-    if status is None:
-        status = tqdm(runi)
     matches = 0
     for i in runi:
         flips = flipgame(flip, stoprule)
         if is_match(flips):
             matches += 1
-        status.update(1)
     return float(matches) / runs
 
 RUNS=10000000
 options = list(itertools.product(FLIPS, STOPS))
-status = tqdm(total = len(options) * RUNS)
 for flip, stoprule in options:
-    mp = match_prob(FLIPS[flip], STOPS[stoprule], RUNS, status)
+    mp = match_prob(FLIPS[flip], STOPS[stoprule], RUNS)
     print flip, stoprule, mp
 
