@@ -33,11 +33,11 @@ FLIPS = {
     'flip75': flip_f(0.75)
     }
 
+LENSTOP=12
+TAILSTOP=3
 STOPS = {
-#    'stop_len_2': stop_len_N_f(2),
-#    'stop_tails_1': stop_tails_N_f(1),
-    'stop_len_12': stop_len_N_f(12),
-    'stop_tails_3': stop_tails_N_f(3)
+    'len_%d' % LENSTOP: stop_len_N_f(LENSTOP),
+    'tails_%d' % TAILSTOP: stop_tails_N_f(TAILSTOP)
 }
 
 
@@ -50,8 +50,8 @@ def flipgame(flip, stoprule):
 
 def is_match(flips):
     return ((flips[-1] is T) and
-            (flips.count(T) == 3) and
-            (len(flips) == 12))
+            (flips.count(T) == TAILSTOP) and
+            (len(flips) == LENSTOP))
 
 def match_prob(flip, stoprule, runs):
     runi = xrange(runs)
