@@ -28,13 +28,6 @@ def stop_tails_N_f(N):
         return False
     return rule
 
-def stop_one_more_heads(flips, stats):
-    heads = stats[H]
-    tails = stats[T]
-    if heads == tails + 1:
-        return True
-    return False
-
 FLIPS = {
     'flip50': flip_f(0.5),
     'flip75': flip_f(0.75)
@@ -44,8 +37,7 @@ LENSTOP=12
 TAILSTOP=3
 STOPS = {
     'len_%d' % LENSTOP: stop_len_N_f(LENSTOP),
-    #'tails_%d' % TAILSTOP: stop_tails_N_f(TAILSTOP)
-    'one_more_head': stop_one_more_heads,
+    'tails_%d' % TAILSTOP: stop_tails_N_f(TAILSTOP)
 }
 
 
