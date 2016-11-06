@@ -23,8 +23,7 @@ def stop_tails_N_f(N):
         count = stats[T]
         #assert count <= N
         if count == N:
-            #assert flips[-1] is T
-            return True
+            return flips[-1] is T
         return False
     return rule
 
