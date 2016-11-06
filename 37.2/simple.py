@@ -64,7 +64,7 @@ def match_prob(flip, stoprule, runs, status=None):
         status.update(1)
     return float(matches) / runs
 
-RUNS=1000000
+RUNS=10000000
 options = list(itertools.product(FLIPS, STOPS))
 status = tqdm(total = len(options) * RUNS)
 for flip, stoprule in options:
