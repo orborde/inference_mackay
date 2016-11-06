@@ -50,14 +50,9 @@ def flipgame(flip, stoprule):
     return flips
 
 
+TARGET = [H,H,H,T, H,H,H,H, T,H,H,T]
 def is_match(flips):
-    stats = collections.defaultdict(int)
-    for f in flips:
-        stats[f] += 1
-    for rule in STOPS.itervalues():
-        if not rule(flips, stats):
-            return False
-    return True
+    return flips == TARGET
 
 def match_prob(flip, stoprule, runs):
     runi = xrange(runs)
@@ -68,7 +63,7 @@ def match_prob(flip, stoprule, runs):
             matches += 1
     return float(matches) / runs
 
-RUNS=1000000
+RUNS=100000000
 options = list(itertools.product(sorted(STOPS), sorted(FLIPS)))
 for stoprule, flip in options:
     mp = match_prob(FLIPS[flip], STOPS[stoprule], RUNS)
