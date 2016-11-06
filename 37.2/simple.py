@@ -70,8 +70,8 @@ def match_prob(flip, stoprule, runs):
     return float(matches) / runs
 
 RUNS=1000000
-options = list(itertools.product(sorted(FLIPS), sorted(STOPS)))
-for flip, stoprule in options:
+options = list(itertools.product(sorted(STOPS), sorted(FLIPS)))
+for stoprule, flip in options:
     mp = match_prob(FLIPS[flip], STOPS[stoprule], RUNS)
-    print flip, stoprule, mp
+    print stoprule, flip, mp
 
