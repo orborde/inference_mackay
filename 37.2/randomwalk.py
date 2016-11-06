@@ -1,3 +1,8 @@
+# Run some Monte Carlo random walks. It turned out that one of my
+# stopping rules was equivalent to "wait until a random walk crosses a
+# specified value", and that turned out to be ... a problem. Random
+# walk lengths can get Quite Big.
+
 import random
 
 OPTS=[-1, 1]
