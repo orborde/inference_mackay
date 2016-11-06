@@ -78,16 +78,6 @@ def match_prob(flip, stoprule, runs):
     return float(matches) / runs
 
 RUNS=1000000
-
-print 'Let us try!'
-for i in xrange(10000):
-    print flipgame(FLIPS['flip50'], stop_one_more_heads)
-
-print 'Done with that'
-import sys
-sys.exit(0)
-
-
 options = list(itertools.product(sorted(FLIPS), sorted(STOPS)))
 for flip, stoprule in options:
     mp = match_prob(FLIPS[flip], STOPS[stoprule], RUNS)
