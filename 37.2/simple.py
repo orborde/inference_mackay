@@ -35,7 +35,7 @@ FLIPS = {
 
 STOPS = {
     'stop_len_2': stop_len_N_f(2),
-    'stop_tails_2': stop_tails_N_f(1)
+    'stop_tails_1': stop_tails_N_f(1)
 }
 
 
