@@ -1,3 +1,4 @@
+import collections
 import random
 import itertools
 
@@ -12,14 +13,14 @@ def flip_f(p):
     return func
 
 def stop_len_N_f(N):
-    def rule(flips):
+    def rule(flips, stats):
         #assert len(flips) <= N
         return (len(flips) == N)
     return rule
 
 def stop_tails_N_f(N):
-    def rule(flips):
-        count = flips.count(T)
+    def rule(flips, stats):
+        count = stats[T]
         #assert count <= N
         if count == N:
             #assert flips[-1] is T
@@ -27,9 +28,9 @@ def stop_tails_N_f(N):
         return False
     return rule
 
-def stop_one_more_heads(flips):
-    heads = flips.count(H)
-    tails = flips.count(T)
+def stop_one_more_heads(flips, stats):
+    heads = stats[H]
+    tails = stats[T]
     if heads == tails + 1:
         return True
     return False
@@ -50,14 +51,20 @@ STOPS = {
 
 def flipgame(flip, stoprule):
     flips = []
-    while not stoprule(flips):
-        flips.append(flip())
+    stats = collections.defaultdict(int)
+    while not stoprule(flips, stats):
+        f = flip()
+        flips.append(f)
+        stats[f] += 1
     return flips
 
 
 def is_match(flips):
+    stats = collections.defaultdict(int)
+    for f in flips:
+        stats[f] += 1
     for rule in STOPS.itervalues():
-        if not rule(flips):
+        if not rule(flips, stats):
             return False
     return True
 
