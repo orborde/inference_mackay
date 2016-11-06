@@ -2,8 +2,7 @@ import collections
 import random
 import itertools
 
-H="H"
-T="T"
+from common import *
 
 def flip_f(p):
     def func():
@@ -12,32 +11,10 @@ def flip_f(p):
         return T
     return func
 
-def stop_len_N_f(N):
-    def rule(flips, stats):
-        #assert len(flips) <= N
-        return (len(flips) == N)
-    return rule
-
-def stop_tails_N_f(N):
-    def rule(flips, stats):
-        count = stats[T]
-        #assert count <= N
-        if count == N:
-            return flips[-1] is T
-        return False
-    return rule
-
 FLIPS = {
     'flip50': flip_f(0.5),
     'flip75': flip_f(0.75)
     }
-
-LENSTOP=12
-TAILSTOP=3
-STOPS = {
-    'len_%d' % LENSTOP: stop_len_N_f(LENSTOP),
-    'tails_%d' % TAILSTOP: stop_tails_N_f(TAILSTOP)
-}
 
 
 def flipgame(flip, stoprule):
@@ -49,8 +26,6 @@ def flipgame(flip, stoprule):
         stats[f] += 1
     return flips
 
-
-TARGET = [H,H,H,T, H,H,H,H, T,H,H,T]
 def is_match(flips):
     return flips == TARGET
 
