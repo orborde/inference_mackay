@@ -30,7 +30,7 @@ def stop_tails_N_f(N):
 
 FLIPS = {
     'flip50': flip_f(0.5),
-    'flip90': flip_f(0.9)
+    'flip75': flip_f(0.75)
     }
 
 STOPS = {
