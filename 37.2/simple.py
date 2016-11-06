@@ -13,16 +13,16 @@ def flip_f(p):
 
 def stop_len_N_f(N):
     def rule(flips):
-        assert len(flips) <= N
+        #assert len(flips) <= N
         return (len(flips) == N)
     return rule
 
 def stop_tails_N_f(N):
     def rule(flips):
         count = flips.count(T)
-        assert count <= N
+        #assert count <= N
         if count == N:
-            assert flips[-1] is T
+            #assert flips[-1] is T
             return True
         return False
     return rule
@@ -49,9 +49,10 @@ def flipgame(flip, stoprule):
 
 
 def is_match(flips):
-    return ((flips[-1] is T) and
-            (flips.count(T) == TAILSTOP) and
-            (len(flips) == LENSTOP))
+    for rule in STOPS.itervalues():
+        if not rule(flips):
+            return False
+    return True
 
 def match_prob(flip, stoprule, runs):
     runi = xrange(runs)
