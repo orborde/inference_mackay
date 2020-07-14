@@ -6,12 +6,34 @@ ENSEMBLE={
     'c': .25,
 }
 
+def p(items, ensemble):
+    return sum(ensemble[i] for i in items)
 
-# powerset(ENSEMBLE.keys()) -> ENSEMBLE.keys() -> outcome
-# "measure" -> ENSEMBLE.keys() -> outcome
-MEASURES=dict()
+def split(items):
+    possibilities = ((abs(z - (1 - z)), subspace) for z,subspace in
+                     ((p(subspace, items), subspace) for subspace in powerset(items)))
+    _, best = min(possibilities)
+    return best
 
-for measure in powerset(ENSEMBLE.keys()):
-    outcomes = dict()
-    for item in ENSEMBLE:
-        outcomes[item] = (item in measure)
+def split_path(item, ensemble):
+    if len(ensemble) == 1:
+        assert item in ensemble
+        return ensemble
+
+    bsplit = split(ensemble)
+    if item in bsplit:
+        new_ensemble = {x: ensemble[x] for x in bsplit}
+    else:
+        new_ensemble = {item
+        return bsplit + split_path(item, new_ensemble)
+
+
+def test_split():
+    for item in ensemble:
+        # Count how many split-by-probability measures it takes to get down to one possibility.
+        pass
+
+if __name__=='__main__':
+    import doctest
+    fails, _ = doctest.testmod()
+    assert fails==0
