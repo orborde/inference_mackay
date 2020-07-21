@@ -62,4 +62,38 @@
     )
 )
 
-(prn (step-distribution {[1,2,3] 1}))
+(defn coalesced? [state-group]
+    (= (count (set state-group)) 1)
+)
+
+(defn p-coalesced [state-group-pmf]
+    (as->
+        (filter (fn [[state-group p]] (coalesced? state-group)) state-group-pmf)
+        v
+
+        (vals v)
+        (apply + v)
+    )
+)
+
+(defn coalesced-pmf [state-group-pmf]
+    (filter (fn [[state-group p]] (coalesced? state-group)) state-group-pmf))
+
+(def start {[1,2,3] 1})
+(loop [
+    i 0
+    state-group-pmf start
+    ]
+
+    (when
+        (< i 1000)
+        (do
+            (prn i "->" (into {}
+                (map
+                    (fn [[state-group, p]] [state-group, (float p)])
+                    (coalesced-pmf state-group-pmf))
+            ))
+            (recur (inc i) (step-distribution state-group-pmf))
+        )
+    )
+)
