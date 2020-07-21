@@ -18,6 +18,7 @@
 
 (def shift-pmf {:left 1/3 :stay 1/3 :right 1/3})
 
+; This is probably overkill, now that I've written it.
 (def transform-pmf
     (into {}
         (for [[shift,p] shift-pmf]
@@ -27,3 +28,38 @@
             ]
         )
     ))
+
+(defn conditioned-on-state-group [state-group]
+    (into {} 
+        (for [[transform, probability] transform-pmf]
+            [(transform state-group), probability]
+        )
+    )
+)
+
+; It would be nice if this validated that the resulting PMF has sum(values) == 1
+(defn sum-pmfs [& pmfs]
+    (merge-with + pmfs)
+)
+
+(defn scalar-mul-vals [c m]
+    (into
+        {}
+        (for [[k,v] m] [k (* c v)])
+    )
+)
+
+(defn step-distribution [state-group-pmf]
+    (as->
+        ; Generate the set of conditional distributions.
+        (for [[state-group, p] state-group-pmf]
+            ; Multiply them by the appropriate base probability.
+            (scalar-mul-vals p (conditioned-on-state-group state-group)))
+        v
+
+        ; Merge all the conditional distributions.
+        (sum-pmfs v)
+    )
+)
+
+(prn (step-distribution {[1,2,3] 1}))
