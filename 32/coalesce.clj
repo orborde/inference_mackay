@@ -20,19 +20,19 @@
 
                                         ; This is probably overkill, now that I've written it.
 (def transform-pmf
-  (apply merge-with +
+  (into {}
         (for [[shift,p] shift-pmf]
-          {
+          [
            (fn [state-group] (step-state-group state-group shift))
            p
-           }
+           ]
           )
         ))
 
 (defn conditioned-on-state-group [state-group]
-  (into {}
+  (apply merge-with +
         (for [[transform, probability] transform-pmf]
-          [(transform state-group), probability]
+          {(transform state-group), probability}
           )
         )
   )
