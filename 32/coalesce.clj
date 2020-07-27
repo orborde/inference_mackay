@@ -20,14 +20,14 @@
 
 ; This is probably overkill, now that I've written it.
 (def transform-pmf
-    (into {}
+  (apply merge-with +
         (for [[shift,p] shift-pmf]
-            [
-                (fn [state-group] (step-state-group state-group shift))
-                p
-            ]
-        )
-    ))
+          {
+           (fn [state-group] (step-state-group state-group shift))
+           p
+           }
+          )
+        ))
 
 (defn conditioned-on-state-group [state-group]
     (into {} 
