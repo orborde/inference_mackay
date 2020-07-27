@@ -31,10 +31,10 @@
 
 (defn conditioned-on-state-group [state-group]
   (apply merge-with +
-        (for [[transform, probability] transform-pmf]
-          {(transform state-group), probability}
-          )
-        )
+         (for [[transform, probability] transform-pmf]
+           {(transform state-group), probability}
+           )
+         )
   )
 
                                         ; It would be nice if this validated that the resulting PMF has sum(values) == 1
@@ -86,18 +86,18 @@
        ]
 
   (when
-      (< i 5)
+      (< i 500)
     (do
       (prn i
            "->"
-           ;; (into {}
-           ;;       (map
-           ;;        (fn [[state-group, p]] [state-group, (float p)])
-           ;;                              ; (coalesced-pmf state-group-pmf)
-           ;;        state-group-pmf
-           ;;        )
-           ;;       )
-           state-group-pmf
+           (into {}
+                 (map
+                  (fn [[state-group, p]] [state-group, (float p)])
+                  (coalesced-pmf state-group-pmf)
+                  ;; state-group-pmf
+                  )
+                 )
+           ;; (coalesced-pmf state-group-pmf)
            (apply + (vals state-group-pmf))
            )
       (recur (inc i) (step-distribution state-group-pmf))
