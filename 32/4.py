@@ -29,3 +29,5 @@ while not coalesced(state):
     lastcount = len(set(state))
     state = newstate
     turn += 1
+
+print(turn, len(set(state)))
